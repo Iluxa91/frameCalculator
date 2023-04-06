@@ -1,10 +1,24 @@
-.data_block {
-  border-right: 1px solid black;
-}
+.data__block {
+  display: flex;
+  width: 100%;
 
-.error {
-  color: red;
+  .input__block {
+    width: 50%;
+    background-color: #d7fcf2;
+    border-radius: 10px;
+    border: 1px solid black;
+
+    h1 {
+      text-align: center;
+    }
+
+    .button__container {
+      display: flex;
+      justify-content: center;
+      margin: 10px;
+      button {
+        padding: 5px;
+      }
+    }
+  }
 }
- * {
-   margin: 10px;
- }

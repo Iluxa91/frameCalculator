@@ -1,6 +1,7 @@
 const path = require("path")
 const {CleanWebpackPlugin} = require("clean-webpack-plugin")
 const HTMLWebpackPlugin = require("html-webpack-plugin")
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
 
 module.exports = {
     mode: "development",
@@ -17,8 +18,12 @@ module.exports = {
     },
     plugins: [
         new HTMLWebpackPlugin({template: "./src/index.html"}),
-        new CleanWebpackPlugin()
+        new CleanWebpackPlugin(),
+        new ForkTsCheckerWebpackPlugin()
     ],
+    watchOptions: {
+        ignored: /node_modules/,
+    },
     module: {
         rules: [
             {

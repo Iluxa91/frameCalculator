@@ -1,55 +1,51 @@
-import React, {ChangeEvent, useState} from "react";
+import React, {memo, useState} from "react";
 import "./DataForm.scss"
 import data from "../../data/data.json"
 import config from "../../data/config.json"
 import {Input} from "./Input/Input";
 import {Select} from "./Select/Select";
+import {Result} from "./Result/Result";
+import {ErrorsObj, TouchedInputs} from "../../helpers/interfaces";
 
-type DataType = {
-    type: string,
-    name: string,
-    material: string,
-    unit: string,
-    width: number,
-    price: number
-}
-
-type DataFormType = {
-    getArea: (width: number, length: number) => void
-}
-
-export const DataForm: React.FC<DataFormType> = ({getArea}) => {
-    const widthMin = config.find(el => el.key === "width").min
-    const widthMax = config.find(el => el.key === "width").max
-    const lengthMin = config.find(el => el.key === "length").min
-    const lengthMax = config.find(el => el.key === "length").max
-
-    // let [width, setWidth] = useState(0)
-    // let [length, setLength] = useState(0)
-
-    let width = 0
-    let length = 0
-    const getWidth = (value: number) => width = value
-    const getLength = (value: number) => length = value
+export const DataForm = memo(() => {
+    const [showResult, setShowResult] = useState(false)
+    const [errors, setErrors] = useState<ErrorsObj>({} as ErrorsObj)
+    const [touchedInputs, setTouchedInputs] = useState<TouchedInputs>({
+        width: false,
+        length: false,
+    });
+    const [params, setParams] = useState({
+        width: 0,
+        length: 0,
+    })
 
     const onClickHandler = () => {
-        getArea(width, length)
+        setShowResult(true)
     }
 
+    const isDisabled = Boolean(errors.width || errors.length) || !touchedInputs.width || !touchedInputs.length
+
     return (
-        <div className="data_block">
-            <h1>Вводные данные</h1>
-
-            <Select materialType="list" data={data}/>
-            <Select materialType="pipe" data={data}/>
-            <Input max={widthMax} min={widthMin} property="width"
-                   getValue={getWidth}/>
-            <Input max={lengthMax} min={lengthMin} property={"length"}
-                   getValue={getLength}/>
-            <Select materialType="frame" data={config}/>
-
-
-            <button onClick={onClickHandler}>Рассчитать</button>
+        <div className="data__block">
+            <div className="input__block">
+                <h1>Вводные данные</h1>
+                <Select name="list" data={data} setParams={setParams}/>
+                <Select name="pipe" data={data} setParams={setParams}/>
+                <Input name="width"
+                       setParams={setParams}
+                       setErrors={setErrors}
+                       setTouchedInputs={setTouchedInputs}/>
+                <Input name="length"
+                       setParams={setParams}
+                       setErrors={setErrors}
+                       setTouchedInputs={setTouchedInputs}/>
+                <Select name="frame" data={config} setParams={setParams}/>
+                <div className="button__container">
+                    <button disabled={isDisabled} onClick={onClickHandler}>Рассчитать
+                    </button>
+                </div>
+            </div>
+            {showResult && <Result params={params} isDisabled={isDisabled}/>}
         </div>
     );
-};
+});
