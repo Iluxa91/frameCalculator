@@ -39,9 +39,7 @@ export interface ParamsObj {
     width: number
     length: number
     frame: string
-
 }
-
 
 
 

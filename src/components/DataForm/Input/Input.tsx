@@ -11,9 +11,9 @@ type InputType = {
     setTouchedInputs: React.Dispatch<React.SetStateAction<TouchedInputs>>
 }
 
-export const Input: React.FC<InputType> = memo(({name, setParams, setErrors, setTouchedInputs}) => {
-    let [value, setValue] = useState(0)
-    let [error, setError] = useState("")
+export const Input: React.FC<InputType> = memo(({ name, setParams, setErrors, setTouchedInputs }) => {
+    const [value, setValue] = useState(0)
+    const [error, setError] = useState("")
 
     const minValue = config.find(el => el.key === name).min
     const maxValue = config.find(el => el.key === name).max
@@ -26,22 +26,21 @@ export const Input: React.FC<InputType> = memo(({name, setParams, setErrors, set
     }
 
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        const newValue = e.currentTarget.value.replace(/[^0-9]/g, '');
+        const newValue = e.currentTarget.value.replace(/[^0-9]/g, "");
         setValue(+newValue)
         setError("")
-        setTouchedInputs((prevTouchedInputs) => ({ ...prevTouchedInputs, [name]: true }));
+        setTouchedInputs((prevTouchedInputs) => ({...prevTouchedInputs, [name]: true}));
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         setErrors((prevState) => ({...prevState, [name]: error}))
-    },[error])
+    }, [error])
 
     return (
         <div className="input__container">
-            <span
-                className="title">Введите {ElementEnum[name as ElementKeys]} конструкции: </span>
+            <span className="title">Введите {ElementEnum[name as ElementKeys]} конструкции: </span>
             <div className="input__box">
-                <input name={name} value={value}
+                <input className={error ? "error" : ""} name={name} value={value}
                        onBlur={onBlurHandler} onChange={onChangeHandler}/>
                 <span className={error ? "error" : ""}>{error}</span>
             </div>

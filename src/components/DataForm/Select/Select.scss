@@ -1,10 +1,29 @@
 .select__container {
   margin: 20px;
+  display: flex;
 
-  .selector {
-    margin-left: 10px;
-    border: 1px solid black;
-    border-radius: 3px;
-    padding: 3px;
+  .filter__container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    font-size: 14px;
+
+    input {
+      width: 100px;
+      border: none;
+    }
+  }
+
+  .selector__box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .selector {
+      margin-left: 10px;
+      border: 1px solid black;
+      border-radius: 3px;
+      padding: 3px;
+    }
   }
 }

@@ -1,4 +1,4 @@
-import React, {memo, useState} from "react";
+import React, {useState} from "react";
 import "./DataForm.scss"
 import data from "../../data/data.json"
 import config from "../../data/config.json"
@@ -7,7 +7,7 @@ import {Select} from "./Select/Select";
 import {Result} from "./Result/Result";
 import {ErrorsObj, TouchedInputs} from "../../helpers/interfaces";
 
-export const DataForm = memo(() => {
+export const DataForm = () => {
     const [showResult, setShowResult] = useState(false)
     const [errors, setErrors] = useState<ErrorsObj>({} as ErrorsObj)
     const [touchedInputs, setTouchedInputs] = useState<TouchedInputs>({
@@ -48,4 +48,4 @@ export const DataForm = memo(() => {
             {showResult && <Result params={params} isDisabled={isDisabled}/>}
         </div>
     );
-});
+};

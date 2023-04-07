@@ -12,10 +12,9 @@ type ResultType = {
 }
 
 export const Result: React.FC<ResultType> = memo(({params, isDisabled}) => {
-
-    let [showCalculation, setShowCalculation] = useState(false)
-    let [calculation, setCalculation] = useState([])
-    let [frameNumb, setFrameNumb] = useState(1)
+    const [showCalculation, setShowCalculation] = useState(false)
+    const [calculation, setCalculation] = useState([])
+    const [frameNumb, setFrameNumb] = useState(1)
 
     // frame params
     const frameLength = params.length
